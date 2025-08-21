@@ -1,0 +1,30 @@
+# Binaries
+bin/
+
+# Build/cache
+.cache/
+*.out
+*.test
+
+# OS/Editor junk
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs and env
+*.log
+.env
+
+# Coverage and profiles
+coverage.*
+*.coverprofile
+*.cov
+*.lcov
+*.prof
+*.pprof
+
+# Vendor (uncomment to ignore vendored deps)
+# vendor/
+
