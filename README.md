@@ -1,13 +1,7 @@
-**Someday CLI**
+# Someday
 
-A minimal Go command line tool scaffolded with module path `github.com/kuniyoshi/someday`.
+Someday is a wish list tool likes TODO list but, more positive purpose.
 
-Usage
-- Build: `go build -o bin/someday ./cmd/someday`
-- Run: `go run ./cmd/someday help`
-- Version: `go run ./cmd/someday version`
+## Usage
 
-Notes
-- The version string can be overridden at build time:
-  `go build -ldflags "-X main.version=1.0.0" -o bin/someday ./cmd/someday`
-
+## Design
