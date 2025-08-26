@@ -4,6 +4,17 @@ Someday is a wish list tool likes TODO list but, more positive purpose.
 
 ## Usage
 
+キーバインドは vim に似ています。
+
+**閲覧モード**
+
+- k: カーソルを上に移動
+- j: カーソルを下に移動
+- C: 説明を
+
+
+**編集モード**
+
 ## Design
 
 ## Screen
