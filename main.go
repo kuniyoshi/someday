@@ -48,22 +48,22 @@ func main() {
 
 // 既定のファイルパスを返す
 func defaultFilePath() string {
-    if p := os.Getenv("SOMEDAY_FILE"); strings.TrimSpace(p) != "" {
-        return p
-    }
-    return "someday.json"
+	if p := os.Getenv("SOMEDAY_FILE"); strings.TrimSpace(p) != "" {
+		return p
+	}
+	return "someday.json"
 }
 
 // 入力ファイルを読み込み、表示する
 func runWithFile(path string) error {
-    b, err := os.ReadFile(path)
-    if err != nil {
+	b, err := os.ReadFile(path)
+	if err != nil {
 		return fmt.Errorf("ファイルを読み込めませんでした (%s)。\nJSON ファイルを指定してください。例: someday -f data.json または SOMEDAY_FILE=someday.json\n%v", path, err)
-    }
-    if err := renderFromJSON(strings.NewReader(string(b))); err != nil {
-        return fmt.Errorf("JSON のパースに失敗しました。配列または { \"items\": [] } を使用してください。\n%w", err)
-    }
-    return nil
+	}
+	if err := renderFromJSON(strings.NewReader(string(b))); err != nil {
+		return fmt.Errorf("JSON のパースに失敗しました。配列または { \"items\": [] } を使用してください。\n%w", err)
+	}
+	return nil
 }
 
 // データモデル
@@ -96,12 +96,12 @@ func renderFromJSON(contentReader io.Reader) error {
 		return nil
 	}
 
-    // 2) { items: [] } として試行
-    var wrapped ItemsFile
-    if err := json.Unmarshal(b, &wrapped); err == nil {
-        printItems(wrapped.Items)
-        return nil
-    }
+	// 2) { items: [] } として試行
+	var wrapped ItemsFile
+	if err := json.Unmarshal(b, &wrapped); err == nil {
+		printItems(wrapped.Items)
+		return nil
+	}
 
 	return fmt.Errorf("JSON のパースに失敗しました")
 }
@@ -109,10 +109,7 @@ func renderFromJSON(contentReader io.Reader) error {
 // 余分な関数は不要
 
 func printItems(items []Item) {
-	for i, it := range items {
-		if i > 0 {
-			// ビジュアル上の区切りとして空行を入れない（README の例に合わせて連続出力）
-		}
+	for _, it := range items {
 		fmt.Printf("- %s\n", it.Description)
 		// 詳細ハードルがあればそれを優先
 		if len(it.HurdlesDetailed) > 0 {
@@ -147,17 +144,17 @@ func printItems(items []Item) {
 }
 
 func printUsage() {
-    fmt.Println("someday - 前向きなウィッシュリスト CLI")
-    fmt.Println()
-    fmt.Println("使い方:")
-    fmt.Println("  someday                      既定 JSON (someday.json) を読み込み表示")
-    fmt.Println("  someday -f <path>            指定 JSON を読み込み表示")
-    fmt.Println("  SOMEDAY_FILE=<path> someday  環境変数で JSON 指定")
-    fmt.Println("  someday help            ヘルプを表示")
-    fmt.Println("  someday version         バージョンを表示")
-    fmt.Println()
-    fmt.Println("入力形式:")
-    fmt.Println("  - JSON のみ: 配列、または { \"items\": [] } で渡す。")
-    fmt.Println("    例: { \"description\": \"...\", \"hurdles\": [\"知識\"], \"significance\": \"中\" }")
-    fmt.Println("    または hurdles_detailed: [{ name, level }] で '時間 (大), アイデア (中)' の表記に対応。")
+	fmt.Println("someday - 前向きなウィッシュリスト CLI")
+	fmt.Println()
+	fmt.Println("使い方:")
+	fmt.Println("  someday                      既定 JSON (someday.json) を読み込み表示")
+	fmt.Println("  someday -f <path>            指定 JSON を読み込み表示")
+	fmt.Println("  SOMEDAY_FILE=<path> someday  環境変数で JSON 指定")
+	fmt.Println("  someday help            ヘルプを表示")
+	fmt.Println("  someday version         バージョンを表示")
+	fmt.Println()
+	fmt.Println("入力形式:")
+	fmt.Println("  - JSON のみ: 配列、または { \"items\": [] } で渡す。")
+	fmt.Println("    例: { \"description\": \"...\", \"hurdles\": [\"知識\"], \"significance\": \"中\" }")
+	fmt.Println("    または hurdles_detailed: [{ name, level }] で '時間 (大), アイデア (中)' の表記に対応。")
 }
