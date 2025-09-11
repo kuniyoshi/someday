@@ -22,7 +22,7 @@ $
 List is formatted below.
 
 - Description
-  Hurdle    Significance
+  {Hurdle    Significance}{1,3}
 
 e.g.,
 
