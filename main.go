@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-var version = "0.1.0"
+var version = "0.4.0"
 
 func main() {
 	// 引数なし: 既定ファイルから読み込み表示
@@ -66,17 +66,15 @@ func runWithFile(path string) error {
 	return nil
 }
 
-// データモデル
+// データモデル: ハードルと重要度のペア
 type Hurdle struct {
-	Name  string `json:"name"`
-	Level string `json:"level"`
+	Type         string `json:"type"`
+	Significance string `json:"significance"`
 }
 
 type Item struct {
-	Description     string   `json:"description"`
-	Hurdles         []string `json:"hurdles,omitempty"`
-	HurdlesDetailed []Hurdle `json:"hurdles_detailed,omitempty"`
-	Significance    string   `json:"significance,omitempty"`
+	Description string   `json:"description"`
+	Hurdles     []Hurdle `json:"hurdles"`
 }
 
 type ItemsFile struct {
@@ -111,34 +109,17 @@ func renderFromJSON(contentReader io.Reader) error {
 func printItems(items []Item) {
 	for _, it := range items {
 		fmt.Printf("- %s\n", it.Description)
-		// 詳細ハードルがあればそれを優先
-		if len(it.HurdlesDetailed) > 0 {
-			parts := make([]string, 0, len(it.HurdlesDetailed))
-			for _, h := range it.HurdlesDetailed {
-				if strings.TrimSpace(h.Level) != "" {
-					parts = append(parts, fmt.Sprintf("%s (%s)", h.Name, h.Level))
-				} else {
-					parts = append(parts, h.Name)
-				}
+		// hurdles のみを表示
+		for _, h := range it.Hurdles {
+			lh := strings.TrimSpace(h.Type)
+			rh := strings.TrimSpace(h.Significance)
+			if lh != "" && rh != "" {
+				fmt.Printf("  %s  %s\n", lh, rh)
+			} else if lh != "" {
+				fmt.Printf("  %s\n", lh)
+			} else if rh != "" {
+				fmt.Printf("  %s\n", rh)
 			}
-			fmt.Printf("  %s\n", strings.Join(parts, ", "))
-			continue
-		}
-
-		// 通常の hurdles + significance
-		left := strings.Join(it.Hurdles, ", ")
-		right := strings.TrimSpace(it.Significance)
-		if left == "" && right == "" {
-			// 追加情報なし
-			continue
-		}
-		if left != "" && right != "" {
-			// Usage の例に合わせて (Significance) を括弧で併記
-			fmt.Printf("  %s (%s)\n", left, right)
-		} else if left != "" {
-			fmt.Printf("  %s\n", left)
-		} else {
-			fmt.Printf("  %s\n", right)
 		}
 	}
 }
@@ -155,6 +136,5 @@ func printUsage() {
 	fmt.Println()
 	fmt.Println("入力形式:")
 	fmt.Println("  - JSON のみ: 配列、または { \"items\": [] } で渡す。")
-	fmt.Println("    例: { \"description\": \"...\", \"hurdles\": [\"知識\"], \"significance\": \"中\" }")
-	fmt.Println("    または hurdles_detailed: [{ name, level }] で '時間 (大), アイデア (中)' の表記に対応。")
+	fmt.Println("    形式: { description, hurdles: [{ type, significance }] }")
 }

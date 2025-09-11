@@ -1,0 +1,27 @@
+[
+  {
+    "description": "Copy on Write を実装する (構造共有)",
+    "hurdles": [
+      { "type": "知識", "significance": "中" }
+    ]
+  },
+  {
+    "description": "タイピングゲームを作る",
+    "hurdles": [
+      { "type": "時間", "significance": "大" },
+      { "type": "アイデア", "significance": "中" }
+    ]
+  },
+  {
+    "description": "sketch スクリプトの再利用性を高める",
+    "hurdles": [
+      { "type": "時間", "significance": "小" }
+    ]
+  },
+  {
+    "description": "テスト追加",
+    "hurdles": [
+      { "type": "その他", "significance": "小" }
+    ]
+  }
+]

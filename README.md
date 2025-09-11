@@ -22,7 +22,7 @@ $
 List is formatted below.
 
 - Description
-  {Hurdle    Significance}{1,3}
+  {Hurdle    Significance}{1..3}  // 複数行のペア
 
 e.g.,
 
@@ -41,3 +41,20 @@ Significance:
   - 大
   - 中
   - 小
+
+## JSON 形式
+
+- 配列、または `{ "items": [] }`
+- 各要素は以下の形式:
+
+```
+{
+  "description": "...",
+  "hurdles": [
+    { "type": "時間", "significance": "大" },
+    { "type": "アイデア", "significance": "中" }
+  ]
+}
+```
+
+後方互換はありません。`hurdles` のみを使用してください。
